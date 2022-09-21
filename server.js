@@ -135,6 +135,48 @@ const updateEmployeeRole = () => {
     });
 }
 
+//deletes a department by ID
+const deleteDepartment = () => {
+    inquirer.prompt({
+        message: 'Please enter the ID of the Department to Delete',
+        name: 'id'
+    }).then((input) => {
+        db.query('DELETE FROM department WHERE ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Deleted Department!`);
+            init();
+        });
+    });
+};
+
+//deletes a role by ID
+const deleteRole = () => {
+    inquirer.prompt({
+        message: 'Please enter the ID of the Role to Delete',
+        name: 'id'
+    }).then((input) => {
+        db.query('DELETE FROM role WHERE ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Deleted Role!`);
+            init();
+        });
+    });
+};
+
+//deletes an employee by ID
+const deleteEmployee = () => {
+    inquirer.prompt({
+        message: 'Please enter the ID of the Employee to Delete',
+        name: 'id'
+    }).then((input) => {
+        db.query('DELETE FROM employee WHERE ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Deleted Employee!`);
+            init();
+        });
+    });
+};
+
 //Initial promt with a switch case to run individual functions. 
 const init = () => {
     prompt({
@@ -148,6 +190,9 @@ const init = () => {
             'Add a Role',
             'Add an Employee',
             'Update an Employee Role',
+            'Delete a Department',
+            'Delete a Role',
+            'Delete an Employee',
             'Exit',
         ],
         message: 'Please select from the list of available options.'
@@ -173,6 +218,15 @@ const init = () => {
             }
             case 'Update an Employee Role': {
                 return updateEmployeeRole();
+            }
+            case 'Delete a Department': {
+                return deleteDepartment();
+            }
+            case 'Delete a Role': {
+                return deleteRole();
+            }
+            case 'Delete an Employee': {
+                return deleteEmployee();
             }
             default: {
                 return process.exit();
