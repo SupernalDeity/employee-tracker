@@ -41,27 +41,78 @@ const viewAllEmployees = () => {
     LEFT JOIN department 
     ON role.department_id = department.id
     LEFT JOIN employee manager 
-    ON employee.manager_id = manager.id`, 
-    (err, employees) => {
-        if (err) throw err;
-        console.table(employees);
-        init();
-    });
+    ON employee.manager_id = manager.id`,
+        (err, employees) => {
+            if (err) throw err;
+            console.table(employees);
+            init();
+        });
 };
 
 //Adds a deapartment to the database
 const addDapartment = () => {
-
-}
+    inquirer.prompt({
+        message: 'Please enter a new Department Name',
+        name: 'name'
+    }).then((input) => {
+        db.query('INSERT INTO department SET ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Saved New Department!`);
+            init();
+        });
+    });
+};
 
 //Adds a role to the database
 const addRole = () => {
-
+    inquirer.prompt([
+        {
+            message: 'Please enter a new Role Name',
+            name: 'title'
+        },
+        {
+            message: 'Please enter the salary of the New Role',
+            name: 'salary'
+        },
+        {
+            message: 'Please enter the Department ID of the New Role',
+            name: 'department_id'
+        }
+    ]).then((input) => {
+        db.query('INSERT INTO role SET ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Saved New Role!`);
+            init();
+        });
+    });
 }
 
 //Adds an employee to the database
 const addEmployee = () => {
-
+    inquirer.prompt([
+        {
+            message: 'Please enter the New Employee\'s first name',
+            name: 'first_name'
+        },
+        {
+            message: 'Please enter the New Employee\'s last name',
+            name: 'last_name'
+        },
+        {
+            message: 'Please enter the Role ID of the New Employee',
+            name: 'role_id'
+        },
+        {
+            message: 'Please enter the New Employee\'s Manager\'s ID.',
+            name: 'manager_id'
+        }
+    ]).then((input) => {
+        db.query('INSERT INTO employee SET ?', input, (err) => {
+            if (err) throw err;
+            console.log(`Saved New Employee!`);
+            init();
+        });
+    });
 }
 
 //Updates an employee in the database
