@@ -11,37 +11,62 @@ const db = mysql.createConnection({
 
 //Displays all the departments in database
 const viewAllDepartments = () => {
-    
+    db.query('SELECT * FROM department', (err, departments) => {
+        if (err) throw err;
+        console.table(departments);
+        init();
+    });
 };
 
 //Displays all the roles in database
 const viewAllRoles = () => {
-    
+    db.query(`SELECT role.id, role.title, role.salary,
+    department.name AS department 
+    FROM role LEFT JOIN department 
+    ON role.department_id = department.id`,
+        (err, roles) => {
+            if (err) throw err;
+            console.table(roles);
+            init();
+        });
 };
 
 //Displays all the employees in database
 const viewAllEmployees = () => {
-    
+    db.query(`SELECT employee.id, employee.first_name, employee.last_name, 
+    role.title, role.salary, department.name as department,
+    CONCAT (manager.first_name, ' ', manager.last_name) AS manager
+    FROM employee LEFT JOIN role
+    ON employee.role_id = role.id
+    LEFT JOIN department 
+    ON role.department_id = department.id
+    LEFT JOIN employee manager 
+    ON employee.manager_id = manager.id`, 
+    (err, employees) => {
+        if (err) throw err;
+        console.table(employees);
+        init();
+    });
 };
 
 //Adds a deapartment to the database
 const addDapartment = () => {
-    
+
 }
 
 //Adds a role to the database
 const addRole = () => {
-    
+
 }
 
 //Adds an employee to the database
 const addEmployee = () => {
-    
+
 }
 
 //Updates an employee in the database
 const updateEmployeeRole = () => {
-    
+
 }
 
 //Initial promt with a switch case to run individual functions. 
@@ -72,16 +97,16 @@ const init = () => {
                 return viewAllEmployees();
             }
             case 'Add a Dapartment': {
-            return addDapartment();
+                return addDapartment();
             }
             case 'Add a Role': {
-            return addRole();
+                return addRole();
             }
             case 'Add an Employee': {
-            return addEmployee();
+                return addEmployee();
             }
             case 'Update an Employee Role': {
-            return updateEmployeeRole();
+                return updateEmployeeRole();
             }
             default: {
                 return process.exit();
