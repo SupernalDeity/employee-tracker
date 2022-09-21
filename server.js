@@ -117,7 +117,22 @@ const addEmployee = () => {
 
 //Updates an employee in the database
 const updateEmployeeRole = () => {
-
+    inquirer.prompt([
+        {
+            message: 'To Update Employee, please enter the Employee\'s ID',
+            name: 'id'
+        },
+        {
+            message: 'Please enter the New Role ID of the employee',
+            name: 'role_id'
+        }
+    ]).then((input) => {
+        db.query('UPDATE employee SET employee.role_id = ? WHERE employee.id = ?', [input.role_id, input.id], (err) => {
+            if (err) throw err;
+            console.log(`Updated Employee!`);
+            init();
+        });
+    });
 }
 
 //Initial promt with a switch case to run individual functions. 
