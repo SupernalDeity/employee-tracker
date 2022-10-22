@@ -20,7 +20,7 @@ Install requirer@8.2.4, mysql2, and console.table by running npm install in the 
 [WalkThrough Video](https://drive.google.com/file/d/1jwPJoH5KDDWfuToqzr313H5qXIB21r_N/view?usp=sharing)
 
 ## Links
-GitHub: https://github.com/SupernalDeity/readme-generator
+GitHub: https://github.com/SupernalDeity/employee-tracker
 
 ## Suppport
 Send support ticket to perezant121@gmail.com.
